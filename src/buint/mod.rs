@@ -11,18 +11,19 @@ use ::{
     serde_big_array::BigArray,
 };
 
-#[cfg(feature = "borsh")]
+#[cfg(feature = "borsh")] //ASD
 use ::{
     alloc::string::ToString,
     borsh::{BorshDeserialize, BorshSchema, BorshSerialize},
 };
+
 
 use core::default::Default;
 
 use core::iter::{Iterator, Product, Sum};
 
 macro_rules! mod_impl {
-    ($BUint: ident, $BInt: ident, $Digit: ident) => {
+    ($BUint: ident, $_BInt: ident, $Digit: ident) => {
         /// Unsigned integer type composed of
         #[doc = concat!("`", stringify!($Digit), "`")]
         /// digits, of arbitrary fixed size which must be known at compile time.
@@ -35,7 +36,7 @@ macro_rules! mod_impl {
 
         #[derive(Clone, Copy, Hash, PartialEq, Eq)]
         #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
-        #[cfg_attr(feature = "borsh", derive(BorshSerialize, BorshDeserialize, BorshSchema))]
+        #[cfg_attr(feature = "borsh", derive(BorshSerialize, BorshDeserialize, BorshSchema))] // ASD
         #[cfg_attr(feature = "arbitrary", derive(arbitrary::Arbitrary))]
         #[cfg_attr(feature = "valuable", derive(valuable::Valuable))]
         #[repr(transparent)]
@@ -711,3 +712,9 @@ mod radix;
 mod saturating;
 mod unchecked;
 mod wrapping;
+
+#[cfg(feature = "borsh")]
+mod borsh;
+
+#[cfg(feature = "schemars")]
+mod schemars;
